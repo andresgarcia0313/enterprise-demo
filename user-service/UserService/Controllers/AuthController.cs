@@ -1,3 +1,6 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserService.DTOs;
 using UserService.Services;
@@ -29,5 +32,17 @@ public class AuthController : ControllerBase
         var token = _jwtService.GenerateToken(user);
 
         return Ok(new LoginResponseDto { Token = token });
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    public IActionResult GetMe()
+    {
+        return Ok(new
+        {
+            Id = User.FindFirstValue(JwtRegisteredClaimNames.Sub),
+            Email = User.FindFirstValue(JwtRegisteredClaimNames.Email),
+            Username = User.FindFirstValue("username")
+        });
     }
 }

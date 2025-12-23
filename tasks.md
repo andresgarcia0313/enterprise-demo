@@ -7,7 +7,7 @@
 - [X] Configurar estructura de carpetas (Controllers, Services, DTOs, Models)
 - [X] Implementar endpoint POST /login con autenticación fake
 - [X] Implementar generación de JWT
-- [ ] Implementar endpoint GET /me
+- [X] Implementar endpoint GET /me
 - [ ] Agregar configuración CORS
 
 ### 1.2 Order Service
