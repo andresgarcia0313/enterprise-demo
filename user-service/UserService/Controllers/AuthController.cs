@@ -2,37 +2,32 @@ using Microsoft.AspNetCore.Mvc;
 using UserService.DTOs;
 using UserService.Services;
 
-namespace UserService.Controllers
-// Route api/users
+namespace UserService.Controllers;
+
+[ApiController]
+[Route("api/users")]
+public class AuthController : ControllerBase
 {
-    [ApiController] // habilita funcionalidades de controller y validacion automática de modelos
-    [Route("api/users")] // ruta base para este controller
-    public class AuthController : ControllerBase
+    private readonly AuthService _authService;
+    private readonly JwtService _jwtService;
+
+    public AuthController(AuthService authService, JwtService jwtService)
     {
-        private readonly AuthService _authService;
+        _authService = authService;
+        _jwtService = jwtService;
+    }
 
-        public AuthController(AuthService authService)
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] LoginRequestDto request)
+    {
+        var user = _authService.ValidateUser(request.Username, request.Password);
+        if (user == null)
         {
-            _authService = authService;
+            return Unauthorized(new { message = "Invalid credentials" });
         }
 
-        [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequestDto request)
-        {
-            var user = _authService.ValidateUser(request.Username, request.Password);
-            if (user == null)
-            {
-                return Unauthorized("Invalid credentials");
-            }
+        var token = _jwtService.GenerateToken(user);
 
-            var token = "mock-jwt-token";
-
-            // var response = new LoginResponseDto
-            // {
-            //     Token = token
-            // };
-
-            return Ok(new { message = "Login Existoso (JWT viene luego)" });
-        }
+        return Ok(new LoginResponseDto { Token = token });
     }
 }

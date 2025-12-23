@@ -3,10 +3,10 @@
 ## Fase 1: Infraestructura Base (Backend)
 
 ### 1.1 User Service
-- [ ] Crear proyecto .NET Web API para user-service
-- [ ] Configurar estructura de carpetas (Controllers, Services, DTOs, Models)
-- [ ] Implementar endpoint POST /login con autenticación fake
-- [ ] Implementar generación de JWT
+- [X] Crear proyecto .NET Web API para user-service
+- [X] Configurar estructura de carpetas (Controllers, Services, DTOs, Models)
+- [X] Implementar endpoint POST /login con autenticación fake
+- [X] Implementar generación de JWT
 - [ ] Implementar endpoint GET /me
 - [ ] Agregar configuración CORS
 
